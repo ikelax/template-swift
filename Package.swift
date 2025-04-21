@@ -4,18 +4,18 @@
 import PackageDescription
 
 let package = Package(
-    name: "ProjectName",
-    products: [
-        .library(
-            name: "swift-project",
-            targets: ["Project"]),
-    ],
-    targets: [
-        .target(
-            name: "Project"),
-        .testTarget(
-            name: "Tests",
-            dependencies: ["Project"]
-        ),
-    ]
+  name: "ProjectName",
+  products: [
+    .library(
+      name: "swift-project",
+      targets: ["Project"])
+  ],
+  targets: [
+    .target(
+      name: "Project"),
+    .testTarget(
+      name: "Tests",
+      dependencies: ["Project"]
+    ),
+  ]
 )
