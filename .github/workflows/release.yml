@@ -43,6 +43,7 @@ jobs:
         uses: SwiftyLab/setup-swift@latest
         with:
           swift-version: "6.1.0"
+          prefer-oss-toolchain: true
       - name: Build
         run: |
           swift build --configuration release --swift-sdk aarch64-swift-linux-musl
