@@ -24,7 +24,7 @@ jobs:
           BIN_PATH_AMD64=$(swift build --configuration release --triple x86_64-apple-macosx --show-bin-path)
           mkdir macos-universal-${{ github.ref_name }}
           lipo -create -output macos-universal-${{ github.ref_name }}/executable $BIN_PATH_ARM64/executable $BIN_PATH_AMD64/executable
-          tar --create --bzip2 --file executable_macos-universal-${{ github.ref_name }}.tar.bz2 --directory macos-universal executable
+          tar --create --bzip2 --file executable_macos-universal-${{ github.ref_name }}.tar.bz2 --directory macos-universal-${{ github.ref_name }} executable
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
