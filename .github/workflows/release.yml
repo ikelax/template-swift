@@ -1,0 +1,31 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  release_macos:
+    name: Release latest macOS executable
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Swift
+        uses: SwiftyLab/setup-swift@latest
+        with:
+          swift-version: "6.1.0"
+      - name: Build
+        run: |
+          swift build --configuration release --triple arm64-apple-macosx
+          swift build --configuration release --triple x86_64-apple-macosx
+          BIN_PATH_ARM64=$(swift build --configuration release --triple arm64-apple-macosx --show-bin-path)
+          BIN_PATH_AMD64=$(swift build --configuration release --triple x86_64-apple-macosx --show-bin-path)
+          mkdir macos-universal-${{ github.ref_name }}
+          lipo -create -output macos-universal-${{ github.ref_name }}/executable $BIN_PATH_ARM64/executable $BIN_PATH_AMD64/executable
+          tar --create --bzip2 --file executable_macos-universal-${{ github.ref_name }}.tar.bz2 --directory macos-universal executable
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: executable_macos-universal-${{ github.ref_name }}.tar.bz2
