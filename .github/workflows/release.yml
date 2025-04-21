@@ -32,3 +32,28 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: executable_macos-universal-${{ github.ref_name }}.tar.bz2
+
+  release_linux:
+    name: Release latest Linux executable
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Swift
+        uses: SwiftyLab/setup-swift@latest
+        with:
+          swift-version: "6.1.0"
+      - name: Build
+        run: |
+          swift build --configuration release --swift-sdk aarch64-swift-linux-musl
+          swift build --configuration release --swift-sdk x86_64-swift-linux-musl
+          BIN_PATH_ARM64=$(swift build --configuration release --swift-sdk aarch64-swift-linux-musl --show-bin-path)
+          BIN_PATH_AMD64=$(swift build --configuration release --swift-sdk x86_64-swift-linux-musl --show-bin-path)
+          tar --create --bzip2 --file executable_linux-arm64-${{ github.ref_name }}.tar.bz2 --directory $BIN_PATH_ARM64 executable
+          tar --create --bzip2 --file executable_linux-amd64-${{ github.ref_name }}.tar.bz2 --directory $BIN_PATH_AMD64 executable
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            executable_linux-arm64-${{ github.ref_name }}.tar.bz2
+            executable_linux-amd64-${{ github.ref_name }}.tar.bz2
