@@ -8,7 +8,8 @@ let package = Package(
   products: [
     .library(
       name: "swift-project",
-      targets: ["Project"])
+      targets: ["Project"]),
+    .executable(name: "executable", targets: ["Executable"]),
   ],
   targets: [
     .target(
@@ -16,6 +17,9 @@ let package = Package(
     .testTarget(
       name: "Tests",
       dependencies: ["Project"]
+    ),
+    .executableTarget(
+      name: "Executable",
     ),
   ]
 )
