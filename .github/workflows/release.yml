@@ -50,7 +50,7 @@ jobs:
           swift build --configuration release --swift-sdk x86_64-swift-linux-musl
           BIN_PATH_ARM64=$(swift build --configuration release --swift-sdk aarch64-swift-linux-musl --show-bin-path)
           BIN_PATH_AMD64=$(swift build --configuration release --swift-sdk x86_64-swift-linux-musl --show-bin-path)
-          tar --create --bzip2 --file executable_linux-arm64-${{ github.ref_name }}.tar.bz2 --directory $BIN_PATH_ARM64 executable
+          tar --create --bzip2 --file executable_linux-arm64-${{ github.ref_name }}.tar.bz2 --directory "$BIN_PATH_ARM64" executable
           tar --create --bzip2 --file executable_linux-amd64-${{ github.ref_name }}.tar.bz2 --directory "$BIN_PATH_AMD64" executable
       - name: Release
         uses: softprops/action-gh-release@v2
