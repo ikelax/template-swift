@@ -8,8 +8,7 @@ updates:
   - package-ecosystem: "github-actions" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "cron"
-      cronjob: "0 18 * * *"
+      interval: "monthly"
     assignees:
       - "ikelax"
     labels:
@@ -17,8 +16,7 @@ updates:
   - package-ecosystem: "swift" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "cron"
-      cronjob: "0 18 * * *"
+      interval: "monthly"
     assignees:
       - "ikelax"
     labels:
